@@ -1,2 +1,2 @@
 # SinfulBot
-http://www.sinfulpixel.com/sinfulbot
+http://www.sinfulpixel.com/sinfulbot.html
