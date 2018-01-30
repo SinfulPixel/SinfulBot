@@ -1,4 +1,3 @@
-
 #SinfulBot by SinfulPixel
 import discord
 from discord.ext import commands
@@ -6,6 +5,7 @@ from discord.ext.commands import Bot
 import asyncio
 import chalk
 import logging
+import datetime
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -62,7 +62,11 @@ async def rolestats(ctx):
 
 @bot.command(pass_context=True)
 async def dmall(ctx,*, message: str):
+    embed = discord.Embed(title="Finished Mass DM",description="Finished Mass DM",color=0x00ff00)
+    embed.set_author(name="SinfulBot")
+    st = datetime.datetime.now()
     rlimit = 0
+    nummem = 0
     roles = ctx.message.server.roles
     for role in roles:
         for member in ctx.message.server.members:
@@ -75,7 +79,23 @@ async def dmall(ctx,*, message: str):
                 else:
                     await bot.send_message(member, message)
                     rlimit+=1
+                    nummem+=1
+    ft = datetime.datetime.now()
+    diff = st - ft
+    mins = int((diff.seconds // 60) % 60)
+    embed.add_field(name="Number of users messaged:",value=nummem,inline=True)
+    embed.add_field(name="Completed time in minutes:",value=mins,inline=True)
+    embed.set_thumbnail(url=ctx.message.server.icon_url)
+    await bot.say(embed=embed)
 
+@bot.command(pass_context=True)
+async def botinfo(ctx):
+    embed = discord.Embed(title="SinfulBot Information",description="Here is what my creator told me to say!",color=0x00ff00)
+    embed.set_author(name="SinfulBot")
+    embed.add_field(name="Author",value="DarthVaper",inline=True)
+    embed.add_field(name="Website",value="http://www.sinfulpixel.com/sinfulbot.html",inline=True)
+    embed.add_field(name="Number of servers using SinfulBot",value=2,inline=True)
+    await bot.say(embed=embed)
         
 
 bot.run('AuthCode')
